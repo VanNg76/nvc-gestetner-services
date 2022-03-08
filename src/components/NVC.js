@@ -4,8 +4,7 @@ import { ApplicationViews } from "./ApplicationViews";
 import { Route, Redirect } from "react-router-dom/cjs/react-router-dom.min";
 import { Login } from "./auth/Login";
 import { Register } from "./auth/Register";
-import "./NVC.css";
-
+import { HomePage } from "./homepage/HomePage";
 
 export const NVC = () => {
     return (
@@ -20,10 +19,14 @@ export const NVC = () => {
                             </>
                         );
                     } else {
-                        return <Redirect to="/login" />;
+                        return <Redirect to="/homepage" />;
                     }
                 }}
             />
+
+            <Route path="/homepage">
+                <HomePage />
+            </Route>
 
             <Route path="/login">
                 <Login />
