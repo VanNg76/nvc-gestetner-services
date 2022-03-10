@@ -33,6 +33,21 @@ export const ProductList = () => {
         [catId]
     )
 
+    const savePurchase = (event) => {
+        event.preventDefault()
+        const newPurchase = {
+            productId: parseInt(event.target.id),
+            customerId: parseInt(localStorage.getItem("kandy_customer"))
+        }
+        
+        const fetchOption = {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify(newPurchase)
+        }
+    }
     
     return (
         <>

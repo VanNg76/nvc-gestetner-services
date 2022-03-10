@@ -11,13 +11,13 @@ export const NVC = () => {
         <>
             <Route
                 render={() => {
-                    if (localStorage.getItem("nvc_customer")) {
+                    if (localStorage.getItem("nvc_customer") || localStorage.getItem("nvc_employee")) {
                         return (
                             <>
                                 <NavBar />
                                 <ApplicationViews />
                             </>
-                        );
+                        )
                     } else {
                         return <Redirect to="/homepage" />;
                     }

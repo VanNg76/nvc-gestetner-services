@@ -26,16 +26,30 @@ export const getCustomers = () => {
     )
 }
 
-export const getOrders = () => {
+export const getAllOrders = () => {
     return (
-        fetch("http://localhost:8088/orders")
+        fetch(`http://localhost:8088/orders?_expand=product`)
                 .then(res => res.json())
     )
 }
 
-export const getServiceTickets = () => {
+export const getOrders = (id) => {
     return (
-        fetch("http://localhost:8088/serviceTickets")
+        fetch(`http://localhost:8088/orders?customerId=${id}&_expand=product`)
+                .then(res => res.json())
+    )
+}
+
+export const getAllServiceTickets = () => {
+    return (
+        fetch(`http://localhost:8088/serviceTickets`)
+                .then(res => res.json())
+    )
+}
+
+export const getServiceTickets = (id) => {
+    return (
+        fetch(`http://localhost:8088/serviceTickets?customerId=${id}`)
                 .then(res => res.json())
     )
 }

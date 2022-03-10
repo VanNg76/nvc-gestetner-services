@@ -14,6 +14,12 @@ export const Login = () => {
             .then(user => user.length ? user[0] : false)
     }
 
+    const existingEmployeeCheck = () => {
+        return fetch(`http://localhost:8088/employees?email=${email}`)
+            .then(res => res.json())
+            .then(emp => emp.length ? emp[0] : false)
+    }
+
     const handleLogin = (e) => {
         e.preventDefault()
         existingUserCheck()
@@ -22,7 +28,15 @@ export const Login = () => {
                     localStorage.setItem("nvc_customer", exists.id)
                     history.push("/")
                 } else {
-                    existDialog.current.showModal()
+                    existingEmployeeCheck()
+                        .then(empExists => {
+                            if (empExists) {
+                                localStorage.setItem("nvc_employee", empExists.id)
+                                history.push("/")
+                            } else {
+                                existDialog.current.showModal()
+                            }
+                        })
                 }
             })
     }
