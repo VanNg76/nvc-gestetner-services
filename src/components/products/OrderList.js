@@ -3,61 +3,73 @@ import { getOrders, getAllOrders, getServiceTickets, getAllServiceTickets } from
 
 
 export const OrderList = () => {
+    // employees array
     const [allOrders, addAllOrders] = useState([])
     const [allTickets, addAllTickets] = useState([])
-    const [orders, addOrders] = useState([])
-    const [tickets, addTickets] = useState([])
     const [updateOrder, setUpdateOrder] = useState(false)
     const [updateTicket, setUpdateTicket] = useState(false)
+
+    // customers array
+    const [orders, addOrders] = useState([])
+    const [tickets, addTickets] = useState([])
     const [totalRevenue, addRevenue] = useState()
     
-    const currentCustomerId = localStorage.getItem("nvc_customer")
-    const currentEmployeeId = localStorage.getItem("nvc_employee")
+    // to check if employee or customer is logged in
+    const currentCustomerId = parseInt(localStorage.getItem("nvc_customer"))
+    const currentEmployeeId = parseInt(localStorage.getItem("nvc_employee"))
 
-    // employee to get all orders
-    useEffect(
-        getAllOrders()
-            .then((allOrder) => {
-                    addAllOrders(allOrder)
-                })
-        , []
-    )
-
-    // employee to get all tickets
-    useEffect(
-        getAllServiceTickets()
-            .then((allTicket) => {
-                addAllTickets(allTicket)
-            })
-        , []
-    )
-
-    // customer to get their orders and re-load the array whenever updateOrder changed
+    // employee to get all orders and re-load the array whenever updateOrder changed
     useEffect(
         () => {
-            getOrders(parseInt(currentCustomerId))
-                .then(order => {
-                    addOrders(order)
+            getAllOrders()
+                .then(allOrder => {
+                        addAllOrders(allOrder)
+                    })
+        }, [updateOrder]
+    )
+
+    // employee to get all tickets and re-load the array whenever updateTicket changed
+    useEffect(
+        () => {
+            getAllServiceTickets()
+                .then(allTicket => {
+                    addAllTickets(allTicket)
                 })
+        }, [updateTicket]
+    )
+
+    // customer to get their orders
+    useEffect(
+        () => {
+            if (currentCustomerId) {
+                getOrders(currentCustomerId)
+                    .then(order => {
+                        addOrders(order)
+                    })
+            }
         },
-        [updateOrder]
+        []
     )
     
-    // customer to get their tickets and re-load the array whenever updateTicket changed
+    // customer to get their tickets
     useEffect(
         () => {
-            getServiceTickets(parseInt(currentCustomerId))
-                .then(ticket => {
-                    addTickets(ticket)
-                })
+            if (currentCustomerId) {
+                getServiceTickets(currentCustomerId)
+                    .then(ticket => {
+                        addTickets(ticket)
+                    })
+            }
         },
-        [updateTicket]
+        []
     )
     
     // calculate customers init total revenue and re-calculate whenever orders changed
     useEffect(
         () => {
-            calculateRev(orders)
+            if (currentCustomerId) {
+                calculateRev(orders)
+            }
         },
         [orders]
     )
@@ -114,6 +126,17 @@ export const OrderList = () => {
         
     }
 
+    const deleteEmployeeOrder = (id) => {
+        fetch(`http://localhost:8088/orders`, {
+            method: "DELETE"
+        })
+
+        // update orders array to eliminate the deleted one!
+        const copy = allOrders.filter(order => order.id != id)
+        addAllOrders(copy)
+        
+    }
+
     const deleteTicket = (id) => {
         fetch(`http://localhost:8088/serviceTickets/${id}`, {
             method: "DELETE"
@@ -125,48 +148,75 @@ export const OrderList = () => {
         
     }
 
+    const deleteEmployeeTicket = (id) => {
+        fetch(`http://localhost:8088/serviceTickets`, {
+            method: "DELETE"
+        })
+
+        // update tickets array to eliminate the deleted one!
+        const copy = allTickets.filter(ticket => ticket.id != id)
+        addAllTickets(copy)
+        
+    }
+
     return (
         <>
         {currentEmployeeId ?
             <div>
-                <p>Current orders:</p>
+                <p>All current orders:</p>
                 <ul>
                     {allOrders.map(order => {
                         return (
-                            <li key={`order--${order.id}`}>
-                                Product Name: {order.product.name}<br></br>
-                                Quantity: {order.quantity}<br></br>
-                                Estimate delivery date: {order.deliveryDate}<br></br>
-                                <label>Completed: </label>
-                                <input type="checkbox" id={`orderComplete--${order.id}`} onChange={
-                                    (event) => {
-                                        const copy = { ...order }
-                                        copy.completed = true
-                                        delete copy.product
-                                        changeOrder(event, copy)
-                                    }
-                                }></input>
-                            </li>
+                            <div key={`order--${order.id}`}>
+                            {order.completed ? "" :
+                                <li>
+                                    Product Name: {order.product.name}<br></br>
+                                    Quantity: {order.quantity}<br></br>
+                                    Estimate delivery date: {order.deliveryDate}<br></br>
+                                    <label>Completed: </label>
+                                    <input type="checkbox" id={`orderComplete--${order.id}`} onChange={
+                                        (event) => {
+                                            const copy = { ...order }
+                                            copy.completed = true
+                                            delete copy.product
+                                            changeOrder(event, copy)
+                                        }
+                                    }></input>
+                                    <button onClick={() => {
+                                        window.alert("This product is not obsolete")
+                                        deleteEmployeeOrder(order.id)
+                                    }}>Delete</button>
+                                </li>
+                            }
+                            </div>
                         )
                     })
                     }
                 </ul>
 
-                <p>Current service request(s):</p>
+                <p>All current service request(s):</p>
                 <ul>
                     {allTickets.map(ticket => {
                         return (
-                            <li>
-                                Description: {ticket.description}<br></br>
-                                <label>Completed: </label>
-                                <input type="checkbox" id={`ticketComplete--${ticket.id}`} onChange={
-                                    (evt) => {
-                                        const copy = {...ticket}
-                                        copy.completed = true
-                                        changeTicket(evt, copy)
-                                    }
-                                }></input>
-                            </li>
+                            <div key={`ticket--${ticket.id}`}>
+                            {ticket.completed ? "" :
+                                <li>
+                                    Description: {ticket.description}<br></br>
+                                    <label>Completed: </label>
+                                    <input type="checkbox" id={`ticketComplete--${ticket.id}`} onChange={
+                                        (evt) => {
+                                            const copy = {...ticket}
+                                            copy.completed = true
+                                            changeTicket(evt, copy)
+                                        }
+                                    }></input>
+                                    <button onClick={() => {
+                                        window.alert("This service is not available")
+                                        deleteEmployeeTicket(ticket.id)
+                                    }}>Delete</button>
+                                </li>
+                            }
+                            </div>
                         )
                     })}
                 </ul>
@@ -188,7 +238,7 @@ export const OrderList = () => {
                                             Total: ${order.product.price * order.quantity}<br></br>
                                             <button onClick={() => {
                                                 deleteOrder(order.id)
-                                            }}>Delete</button>
+                                            }}>Cancel</button>
                                         </li>
                                     }
                                 </div>
@@ -209,7 +259,7 @@ export const OrderList = () => {
                                             Description: {ticket.description}<br></br>
                                             <button onClick={() => {
                                                 deleteTicket(ticket.id)
-                                            }}>Delete</button>
+                                            }}>Cancel</button>
                                         </li>
                                     }
                                 </div>

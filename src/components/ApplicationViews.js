@@ -8,7 +8,7 @@ import { ServiceForm } from "./forms/ServiceForm"
 export const ApplicationViews = () => {
     return (
         <>
-            <Route path="/products">
+            <Route exact path="/products">
                 <ProductList />
             </Route>
             <Route path="/services/new">

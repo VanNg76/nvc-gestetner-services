@@ -1,10 +1,9 @@
-import React, { useRef, useState } from "react"
+import React, { useState } from "react"
 import { useHistory } from "react-router-dom/cjs/react-router-dom.min";
 
 export const ServiceForm = () => {
     const [service, update] = useState({ });
     const history = useHistory()
-    const existDialog = useRef()
 
     const saveService = (event) => {
         event.preventDefault()
@@ -26,11 +25,7 @@ export const ServiceForm = () => {
 
         return fetch("http://localhost:8088/serviceTickets", fetchOption)
             .then(() => {
-                <dialog className="dialog dialog--auth" ref={existDialog}>
-                    <div>Your request has been submitted</div>
-                    <button className="button--close" onClick={e => existDialog.current.close()}>Close</button>
-                </dialog>
-                // window.alert("Your request has been submitted")
+                window.alert("Your request has been submitted")
                 history.push("/orders")
             })
     }

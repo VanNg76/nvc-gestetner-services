@@ -1,5 +1,6 @@
 import React from "react";
 import { NavBar } from "./nav/NavBar";
+import { NavBarEmployee } from "./nav/NavBarEmployee"
 import { ApplicationViews } from "./ApplicationViews";
 import { Route, Redirect } from "react-router-dom/cjs/react-router-dom.min";
 import { Login } from "./auth/Login";
@@ -11,7 +12,7 @@ export const NVC = () => {
         <>
             <Route
                 render={() => {
-                    if (localStorage.getItem("nvc_customer") || localStorage.getItem("nvc_employee")) {
+                    if (localStorage.getItem("nvc_customer")) {
                         return (
                             <>
                                 <NavBar />
@@ -19,7 +20,16 @@ export const NVC = () => {
                             </>
                         )
                     } else {
-                        return <Redirect to="/homepage" />;
+                        if (localStorage.getItem("nvc_employee")) {
+                            return (
+                                <>
+                                    <NavBarEmployee />
+                                    <ApplicationViews />
+                                </> 
+                            )
+                        } else {
+                            return <Redirect to="/homepage" />;
+                        }
                     }
                 }}
             />
