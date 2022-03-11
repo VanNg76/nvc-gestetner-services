@@ -1,15 +1,16 @@
 import React, { useEffect, useState } from "react"
-import { getOrders, getAllOrders, getServiceTickets, getAllServiceTickets } from "../ApiManager"
+import { getOrders, getAllOrders, getServiceTickets, getAllServiceTickets, getEmployees } from "../ApiManager"
 
 
 export const OrderList = () => {
-    // employees array
+    // employees' array
     const [allOrders, addAllOrders] = useState([])
     const [allTickets, addAllTickets] = useState([])
     const [updateOrder, setUpdateOrder] = useState(false)
     const [updateTicket, setUpdateTicket] = useState(false)
+    const [employees, addEmployees] = useState([])
 
-    // customers array
+    // customers' array
     const [orders, addOrders] = useState([])
     const [tickets, addTickets] = useState([])
     const [totalRevenue, addRevenue] = useState()
@@ -62,6 +63,15 @@ export const OrderList = () => {
             }
         },
         []
+    )
+
+    useEffect(
+        () => {
+            getEmployees()
+                .then(emp => {
+                    addEmployees(emp)
+                })
+        }, []
     )
     
     // calculate customers init total revenue and re-calculate whenever orders changed
@@ -123,7 +133,6 @@ export const OrderList = () => {
         // update orders array to eliminate the deleted one!
         const copy = orders.filter(order => order.id != id)
         addOrders(copy)
-        
     }
 
     const deleteEmployeeOrder = (id) => {
@@ -134,7 +143,6 @@ export const OrderList = () => {
         // update orders array to eliminate the deleted one!
         const copy = allOrders.filter(order => order.id != id)
         addAllOrders(copy)
-        
     }
 
     const deleteTicket = (id) => {
@@ -145,7 +153,6 @@ export const OrderList = () => {
         // update tickets array to eliminate the deleted one!
         const copy = tickets.filter(ticket => ticket.id != id)
         addTickets(copy)
-        
     }
 
     const deleteEmployeeTicket = (id) => {
@@ -156,8 +163,13 @@ export const OrderList = () => {
         // update tickets array to eliminate the deleted one!
         const copy = allTickets.filter(ticket => ticket.id != id)
         addAllTickets(copy)
-        
     }
+
+    const employeeName = (id) => {
+        const findEmployee = employees.find(emp => emp.id === id)
+        return (findEmployee?.name)
+    }
+
 
     return (
         <>
@@ -202,6 +214,8 @@ export const OrderList = () => {
                             {ticket.completed ? "" :
                                 <li>
                                     Description: {ticket.description}<br></br>
+                                    Assigned to: {employeeName(ticket.employeeId)}<br></br>
+
                                     <label>Completed: </label>
                                     <input type="checkbox" id={`ticketComplete--${ticket.id}`} onChange={
                                         (evt) => {
@@ -210,10 +224,27 @@ export const OrderList = () => {
                                             changeTicket(evt, copy)
                                         }
                                     }></input>
+                                    
                                     <button onClick={() => {
                                         window.alert("This service is not available")
                                         deleteEmployeeTicket(ticket.id)
-                                    }}>Delete</button>
+                                    }}>Delete</button><br></br>
+                                    
+                                    <label>Re-assign ticket to: </label>
+                                    <select id="technician" onChange={
+                                        (event) => {
+                                            const copy = {...ticket}
+                                            copy.employeeId = parseInt(event.target.value)
+                                            changeTicket(event, copy)
+                                        }
+                                    }>
+                                        <option value="">Select technician:</option>
+                                        {
+                                            employees.map(employee => {
+                                                return <option key={`employees--${employee.id}`} value={employee.id}>{employee.name}</option>
+                                            })
+                                        }
+                                    </select>
                                 </li>
                             }
                             </div>
@@ -236,6 +267,7 @@ export const OrderList = () => {
                                             Estimate delivery date: {order.deliveryDate}<br></br>
                                             Price per unit: ${order.product.price}<br></br>
                                             Total: ${order.product.price * order.quantity}<br></br>
+                                            
                                             <button onClick={() => {
                                                 deleteOrder(order.id)
                                             }}>Cancel</button>
@@ -257,6 +289,7 @@ export const OrderList = () => {
                                     {ticket.completed ? "" :
                                         <li>
                                             Description: {ticket.description}<br></br>
+                                            
                                             <button onClick={() => {
                                                 deleteTicket(ticket.id)
                                             }}>Cancel</button>

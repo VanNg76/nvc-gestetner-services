@@ -92,6 +92,7 @@ export const ProductList = () => {
                             {currentEmployeeId ? "" :
                                 <button id={product.id} onClick={() => {
                                     updateShowed(true)
+                                    debugger
                                 }
                                 }>Purchase</button>
                             }
@@ -138,7 +139,8 @@ export const ProductList = () => {
                                             
                                             <button className="btn btn-primary" onClick={
                                                 (event) => {
-                                                    savePurchase(event, product)}
+                                                    savePurchase(event, product)
+                                                }
                                                 }>Place Purchase
                                             </button>
                                         </form>

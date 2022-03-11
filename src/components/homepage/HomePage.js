@@ -2,7 +2,6 @@ import React, { useState, useEffect} from "react";
 import { useHistory } from "react-router-dom";
 import { getProducts } from "../ApiManager";
 
-
 export const HomePage = () => {
     const [products, createProducts] = useState([])
     const history = useHistory()
