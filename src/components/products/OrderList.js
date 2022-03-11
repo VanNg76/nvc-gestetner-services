@@ -136,7 +136,7 @@ export const OrderList = () => {
     }
 
     const deleteEmployeeOrder = (id) => {
-        fetch(`http://localhost:8088/orders`, {
+        fetch(`http://localhost:8088/orders/${id}`, {
             method: "DELETE"
         })
 
@@ -156,7 +156,7 @@ export const OrderList = () => {
     }
 
     const deleteEmployeeTicket = (id) => {
-        fetch(`http://localhost:8088/serviceTickets`, {
+        fetch(`http://localhost:8088/serviceTickets/${id}`, {
             method: "DELETE"
         })
 
@@ -195,7 +195,7 @@ export const OrderList = () => {
                                         }
                                     }></input>
                                     <button onClick={() => {
-                                        window.alert("This product is not obsolete")
+                                        window.alert("This product is no more available")
                                         deleteEmployeeOrder(order.id)
                                     }}>Delete</button>
                                 </li>

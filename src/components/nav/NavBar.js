@@ -26,7 +26,7 @@ export const NavBar = (props) => {
                 </li>
 
             </ul>
-            <h1>NVC Gestetner Services</h1>
+            <h1>Welcome to NVC Gestetner Services</h1>
         </>
     )
 }

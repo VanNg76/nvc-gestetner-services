@@ -7,10 +7,10 @@ import { getCategories } from "../ApiManager";
 export const ProductList = () => {
     const [categories, setCategories] = useState([])
     const [products, setProducts] = useState([])
+    const [updateProduct, setUpdateProduct] = useState(false)
     const [catId, changeCatId] = useState(0)
     const [filtered, setFilter] = useState([])
     const [purchase, update] = useState({})
-    const [showed, updateShowed] = useState(false)
     const history = useHistory()
 
     // to check if employee or customer is logged in
@@ -29,7 +29,7 @@ export const ProductList = () => {
             getProducts()
                 .then(pro => setProducts(pro))
         },
-        []
+        [updateProduct]
     )
 
     useEffect(
@@ -65,6 +65,23 @@ export const ProductList = () => {
             })
     }
 
+    // update showedAddtionalInfo when the Purchase button clicked
+    const updateShowedAdditionInfo = (event, copy) => {
+        event.preventDefault()
+        const fetchOption = {
+            method: "PUT",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify(copy)
+        }
+
+        return fetch(`http://localhost:8088/products/${copy.id}`, fetchOption)
+            .then(() => {
+                setUpdateProduct(!updateProduct)
+            })
+    }
+
 
     return (
         <>
@@ -90,14 +107,16 @@ export const ProductList = () => {
                             <p>Description: {product.description}</p>
                             <p>Price: ${product.price}</p>
                             {currentEmployeeId ? "" :
-                                <button id={product.id} onClick={() => {
-                                    updateShowed(true)
-                                    debugger
-                                }
+                                <button id={product.id} onClick={
+                                    (event) => {
+                                        const copy = {...product}
+                                        product.showedAdditionInfo = !product.showedAdditionInfo
+                                        updateShowedAdditionInfo(event, copy)
+                                    }
                                 }>Purchase</button>
                             }
                             {
-                                showed ?
+                                product.showedAdditionInfo ?
                                     <div>
                                         <form className="purchaseForm">
                                             <h2 className="purchaseForm__title">Additional Info:</h2>

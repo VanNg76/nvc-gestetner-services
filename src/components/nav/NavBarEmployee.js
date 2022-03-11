@@ -23,7 +23,7 @@ export const NavBarEmployee = (props) => {
                 </li>
 
             </ul>
-            <h1>NVC Gestetner Services</h1>
+            <h1>NVC Gestetner Services Internal site</h1>
         </>
     )
 }

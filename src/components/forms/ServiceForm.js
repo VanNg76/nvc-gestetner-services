@@ -52,7 +52,7 @@ export const ServiceForm = () => {
             </fieldset>
             
             <button className="btn btn-primary" onClick={saveService}>
-                Submit service
+                Submit request
             </button>
         </form>
     )
