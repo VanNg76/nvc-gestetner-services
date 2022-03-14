@@ -1,46 +1,55 @@
 import React, { useEffect, useState } from "react"
 import { useHistory } from "react-router-dom";
-import { getProducts } from "../ApiManager"
-import { getCategories } from "../ApiManager";
+import ApiManager from "../ApiManager";
 
 
 export const ProductList = () => {
     const [categories, setCategories] = useState([])
-    const [products, setProducts] = useState([])
     const [updateProduct, setUpdateProduct] = useState(false)
     const [catId, changeCatId] = useState(0)
     const [filtered, setFilter] = useState([])
     const [purchase, update] = useState({})
     const history = useHistory()
+    const [employees, addEmployees] = useState([])
 
     // to check if employee or customer is logged in
     const currentEmployeeId = parseInt(localStorage.getItem("nvc_employee"))
 
     useEffect(
         () => {
-            getCategories()
+            ApiManager.getCategories()
                 .then(cat => setCategories(cat))
+            ApiManager.getProductsbyCat(catId)
+                .then(filteredPro => setFilter(filteredPro))
         },
         []
     )
 
     useEffect(
         () => {
-            getProducts()
-                .then(pro => setProducts(pro))
+            ApiManager.getProductsbyCat(catId)
+                .then(filteredPro => setFilter(filteredPro))
         },
-        [updateProduct]
+        [updateProduct, catId]
     )
 
     useEffect(
         () => {
-            const filterProducts = products.filter(product => product.categoryId === catId)
-            setFilter(filterProducts)
-        },
-        [catId]
+            ApiManager.getEmployees()
+                .then(emp => addEmployees(emp))
+    }, []
     )
-   
-    const savePurchase = (event, product) => {
+
+    const isAdministrative = () => {
+        const foundEmployee = employees.find(emp => emp.id === currentEmployeeId)
+        if (foundEmployee?.administrative) {
+            return foundEmployee
+        } else {
+            return null
+        }
+    }
+
+    async function savePurchase (event, product) {
         event.preventDefault()
         const newPurchase = {
             productId: product.id,
@@ -59,14 +68,14 @@ export const ProductList = () => {
             body: JSON.stringify(newPurchase)
         }
 
-        return fetch("http://localhost:8088/orders", fetchOption)
+        return await fetch("http://localhost:8088/orders", fetchOption)
             .then(() => {
                 history.push("/orders")
             })
     }
 
     // update showedAddtionalInfo when the Purchase button clicked
-    const updateShowedAdditionInfo = (event, copy) => {
+    async function updateShowedAdditionInfo (event, copy) {
         event.preventDefault()
         const fetchOption = {
             method: "PUT",
@@ -76,15 +85,35 @@ export const ProductList = () => {
             body: JSON.stringify(copy)
         }
 
-        return fetch(`http://localhost:8088/products/${copy.id}`, fetchOption)
+        return await fetch(`http://localhost:8088/products/${copy.id}`, fetchOption)
             .then(() => {
                 setUpdateProduct(!updateProduct)
             })
     }
 
+    const numberFormat = (value) => {
+        return new Intl.NumberFormat('en-US', {
+            style: 'currency',
+            currency: 'USD'
+        }).format(value);
+    }
 
     return (
         <>
+            <h3>Multifunction Printers & Copiers</h3>
+            <p>Our high-quality, multifunction printers and copiers offer many configurations to meet your needs. 
+            Personalize your black & white or color copier with options in speed, paper size, finishing and features. 
+            See our full line up and discover how our smart technology, superior image quality and document-sharing tools 
+            can help increase business productivity.</p>
+            
+            {
+                isAdministrative() ?
+                    <div>
+                        <button onClick={() => history.push("/products/new")}>Add New Product</button>
+                    </div>
+                : ""
+            }
+
             <label htmlFor="category">Select category: </label>
             <select id="category" onChange={
                 (event) => {
@@ -105,16 +134,18 @@ export const ProductList = () => {
                         <div key={`product--${product.id}`}>
                             <p>Product name: {product.name}</p>
                             <p>Description: {product.description}</p>
-                            <p>Price: ${product.price}</p>
+                            <p>Price: ${numberFormat(product.price)}</p>
+
                             {currentEmployeeId ? "" :
                                 <button id={product.id} onClick={
                                     (event) => {
                                         const copy = {...product}
-                                        product.showedAdditionInfo = !product.showedAdditionInfo
+                                        copy.showedAdditionInfo = !copy.showedAdditionInfo
                                         updateShowedAdditionInfo(event, copy)
                                     }
                                 }>Purchase</button>
                             }
+
                             {
                                 product.showedAdditionInfo ?
                                     <div>

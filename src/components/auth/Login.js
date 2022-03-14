@@ -26,13 +26,13 @@ export const Login = () => {
             .then(exists => {
                 if (exists) {
                     localStorage.setItem("nvc_customer", exists.id)
-                    history.push("/")
+                    history.push("/products")
                 } else {
                     existingEmployeeCheck()
                         .then(empExists => {
                             if (empExists) {
                                 localStorage.setItem("nvc_employee", empExists.id)
-                                history.push("/")
+                                history.push("/products")
                             } else {
                                 existDialog.current.showModal()
                             }

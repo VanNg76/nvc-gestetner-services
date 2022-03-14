@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react"
-import { getOrders, getAllOrders, getServiceTickets, getAllServiceTickets, getEmployees } from "../ApiManager"
+import ApiManager from "../ApiManager"
 
 
 export const OrderList = () => {
@@ -22,7 +22,7 @@ export const OrderList = () => {
     // employee to get all orders and re-load the array whenever updateOrder changed
     useEffect(
         () => {
-            getAllOrders()
+            ApiManager.getAllOrders()
                 .then(allOrder => {
                         addAllOrders(allOrder)
                     })
@@ -32,7 +32,7 @@ export const OrderList = () => {
     // employee to get all tickets and re-load the array whenever updateTicket changed
     useEffect(
         () => {
-            getAllServiceTickets()
+            ApiManager.getAllServiceTickets()
                 .then(allTicket => {
                     addAllTickets(allTicket)
                 })
@@ -43,7 +43,7 @@ export const OrderList = () => {
     useEffect(
         () => {
             if (currentCustomerId) {
-                getOrders(currentCustomerId)
+                ApiManager.getOrders(currentCustomerId)
                     .then(order => {
                         addOrders(order)
                     })
@@ -56,7 +56,7 @@ export const OrderList = () => {
     useEffect(
         () => {
             if (currentCustomerId) {
-                getServiceTickets(currentCustomerId)
+                ApiManager.getServiceTickets(currentCustomerId)
                     .then(ticket => {
                         addTickets(ticket)
                     })
@@ -67,7 +67,7 @@ export const OrderList = () => {
 
     useEffect(
         () => {
-            getEmployees()
+            ApiManager.getEmployees()
                 .then(emp => {
                     addEmployees(emp)
                 })
@@ -92,7 +92,7 @@ export const OrderList = () => {
     }
 
     // update completed order
-    const changeOrder = (event, copy) => {
+    async function changeOrder (event, copy) {
         event.preventDefault()
         const fetchOption = {
             method: "PUT",
@@ -102,14 +102,14 @@ export const OrderList = () => {
             body: JSON.stringify(copy)
         }
 
-        return fetch(`http://localhost:8088/orders/${copy.id}`, fetchOption)
+        return await fetch(`http://localhost:8088/orders/${copy.id}`, fetchOption)
             .then(() => {
                 setUpdateOrder(!updateOrder)
             })
     }
 
     // update completed ticket
-    const changeTicket = (event, copy) => {
+    async function changeTicket (event, copy) {
         event.preventDefault()
         const fetchOption = {
             method: "PUT",
@@ -119,49 +119,49 @@ export const OrderList = () => {
             body: JSON.stringify(copy)
         }
 
-        return fetch(`http://localhost:8088/serviceTickets/${copy.id}`, fetchOption)
+        return await fetch(`http://localhost:8088/serviceTickets/${copy.id}`, fetchOption)
             .then(() => {
                 setUpdateTicket(!updateTicket)
             })
     }
 
-    const deleteOrder = (id) => {
-        fetch(`http://localhost:8088/orders/${id}`, {
+    async function deleteOrder (id) {
+        await fetch(`http://localhost:8088/orders/${id}`, {
             method: "DELETE"
         })
 
         // update orders array to eliminate the deleted one!
-        const copy = orders.filter(order => order.id != id)
+        const copy = orders.filter(order => order.id !== id)
         addOrders(copy)
     }
 
-    const deleteEmployeeOrder = (id) => {
-        fetch(`http://localhost:8088/orders/${id}`, {
+    async function deleteEmployeeOrder (id) {
+        await fetch(`http://localhost:8088/orders/${id}`, {
             method: "DELETE"
         })
 
         // update orders array to eliminate the deleted one!
-        const copy = allOrders.filter(order => order.id != id)
+        const copy = allOrders.filter(order => order.id !== id)
         addAllOrders(copy)
     }
 
-    const deleteTicket = (id) => {
-        fetch(`http://localhost:8088/serviceTickets/${id}`, {
+    async function deleteTicket (id) {
+        await fetch(`http://localhost:8088/serviceTickets/${id}`, {
             method: "DELETE"
         })
 
         // update tickets array to eliminate the deleted one!
-        const copy = tickets.filter(ticket => ticket.id != id)
+        const copy = tickets.filter(ticket => ticket.id !== id)
         addTickets(copy)
     }
 
-    const deleteEmployeeTicket = (id) => {
-        fetch(`http://localhost:8088/serviceTickets/${id}`, {
+    async function deleteEmployeeTicket (id) {
+        await fetch(`http://localhost:8088/serviceTickets/${id}`, {
             method: "DELETE"
         })
 
         // update tickets array to eliminate the deleted one!
-        const copy = allTickets.filter(ticket => ticket.id != id)
+        const copy = allTickets.filter(ticket => ticket.id !== id)
         addAllTickets(copy)
     }
 
@@ -170,12 +170,19 @@ export const OrderList = () => {
         return (findEmployee?.name)
     }
 
+    const numberFormat = (value) => {
+        return new Intl.NumberFormat('en-US', {
+            style: 'currency',
+            currency: 'USD'
+        }).format(value);
+    }
+
 
     return (
         <>
         {currentEmployeeId ?
             <div>
-                <p>All current orders:</p>
+                <h3>All current orders:</h3>
                 <ul>
                     {allOrders.map(order => {
                         return (
@@ -206,7 +213,7 @@ export const OrderList = () => {
                     }
                 </ul>
 
-                <p>All current service request(s):</p>
+                <h3>All current service request(s):</h3>
                 <ul>
                     {allTickets.map(ticket => {
                         return (
@@ -254,7 +261,7 @@ export const OrderList = () => {
             </div>
         :
             <div>
-                <p>Your current orders:</p>
+                <p>Your current order(s):</p>
                 <ul>
                     {
                         orders.map(order => {
@@ -265,8 +272,8 @@ export const OrderList = () => {
                                             Product Name: {order.product.name}<br></br>
                                             Quantity: {order.quantity}<br></br>
                                             Estimate delivery date: {order.deliveryDate}<br></br>
-                                            Price per unit: ${order.product.price}<br></br>
-                                            Total: ${order.product.price * order.quantity}<br></br>
+                                            Price per unit: {numberFormat(order.product.price)}<br></br>
+                                            Total: {numberFormat(order.product.price * order.quantity)}<br></br>
                                             
                                             <button onClick={() => {
                                                 deleteOrder(order.id)
@@ -278,7 +285,7 @@ export const OrderList = () => {
                         })
                     }
                 </ul>
-                <p>Total Price of current Order(s): ${totalRevenue}</p>
+                <p>Total Price of current Order(s): {numberFormat(totalRevenue)}</p>
 
                 <p>Your current service request(s):</p>
                 <ul>
@@ -288,7 +295,7 @@ export const OrderList = () => {
                                 <div key={`ticket--${ticket.id}`}>
                                     {ticket.completed ? "" :
                                         <li>
-                                            Description: {ticket.description}<br></br>
+                                            <div>Description: {ticket.description}</div>
                                             
                                             <button onClick={() => {
                                                 deleteTicket(ticket.id)
