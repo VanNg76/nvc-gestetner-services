@@ -29,6 +29,10 @@ export default {
             .then(res => res.json())
         
     },
+    async getDownloadOrders () {
+        return await fetch(`http://localhost:8088/orders?_expand=product&_expand=customer&_expand=employee`)
+            .then(res => res.json())
+    },
     async getOrders (id) {
         return await fetch(`http://localhost:8088/orders?customerId=${id}&_expand=product`)
             .then(res => res.json())
