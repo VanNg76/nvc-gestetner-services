@@ -1,0 +1,12 @@
+
+.button-cancel {
+    margin-top: 5px;
+    margin-bottom: 10px;
+    background-color: lightgray;
+}
+
+.completeCheck, .completeLabel {
+    margin: 0 52px 0 0;
+}
+
+

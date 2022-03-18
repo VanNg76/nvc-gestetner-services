@@ -1,0 +1,27 @@
+
+.addLabel {
+    margin: 0
+}
+
+.addInput {
+    font-family:Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+    line-height: 1.5rem;
+    width: 50%;
+    padding: 5px;
+    font-size: 1rem;
+    margin-top:5px
+}
+
+.addSelect {
+    font-family:Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+    margin-top: 5px;
+    font-size: 1rem;
+}
+
+.button-add {
+    margin-top: 20px;
+    margin-bottom: 10px;
+    background-color: lightcoral;
+    font-family:Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+    font-size: 1rem;
+}

@@ -1,0 +1,74 @@
+span {
+    font-weight: 600;
+    color: dodgerblue;
+    text-decoration: underline;
+}
+
+.button-addNew {
+    background-color: lightgrey;
+    padding: 5px;
+}
+
+.dropdown {
+    background-color: lightgray;
+    margin: 0;
+}
+
+.selectCat {
+    margin-left: 0;
+}
+
+.button-purchase {
+    background-color: lightgrey;
+    border-radius: 0.3rem;
+    padding: 0.3rem;
+    margin: 1rem;
+}
+
+.purchaseForm__title {
+    margin: 20px;
+}
+
+@keyframes appear {
+    from {
+        opacity: 0.2;
+        transform: rotate(-30deg) translateY(-100%) ;
+    }
+    to {
+        opacity: 1;
+        transform: rotate(0deg) translateY(0%) ;
+    }
+}
+
+.purchaseForm {
+    animation-name: appear;
+    animation-duration: 0.8s;
+    width: 350px;
+    margin-left: 50px;
+    padding: 10px;
+    background-color: lightgray;
+}
+
+.form-addition-label {
+    width: 100px;
+    line-height: 2rem;
+    display: inline-block;
+}
+
+.form-addition-input {
+    width: 200px;
+    line-height: 2rem;
+    display: inline-block;
+    margin-right: 30px;
+    margin-bottom: 10px;
+}
+
+.button-placepurchase {
+    background-color: lightcoral;
+    border-radius: 0.3rem;
+    padding: 0.3rem;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+}
+

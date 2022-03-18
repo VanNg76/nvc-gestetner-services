@@ -1,0 +1,71 @@
+.button--login {
+    width: 4.5rem;
+    height: 2.2rem;
+    font-size: 1rem;
+    background-color: lightgrey;
+    position:absolute;
+    top: 1.4rem;
+    right: 1.4rem;
+    border-radius: 0.3rem;
+    font-family:Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+}
+
+h1 {
+    text-align: center;
+    margin: 2rem 0 2 rem 0;
+}
+
+h5 {
+    color:dodgerblue;
+    font-size: 1rem;
+}
+
+.products {
+    margin: 20px;
+    width: 300px;
+    box-shadow: 0 5px 10px 0 rgba(0,0,0,0.2);
+    padding: 10px;
+}
+
+@keyframes grow-and-shrink {
+    0% {
+      transform: scale(1);
+    }
+    100% {
+      transform: scale(1.1);
+    }
+  }
+.products:hover {
+    animation-name: grow-and-shrink;
+    animation-duration: 1s;
+}
+
+.pro-by-cat {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+img {
+    width: 220px;
+    /* to make image center, use auto for margin left and right */
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+@keyframes color-change {
+    0% {color: red;}
+    20% {color: orange;}
+    40% {color: yellow;}
+    60% {color: green;}
+    80% {color: blue;}
+    100% {color: violet;}
+}
+
+.colorCat {
+    animation-name: color-change;
+    animation-duration: 0.5s;
+    animation-iteration-count: infinite;
+}
+
+
