@@ -189,14 +189,16 @@ export const OrderList = () => {
         <>
         {currentEmployeeId ?
             <div>
-                <h3>All current orders:</h3>
+                <h2>NVC Gestetner Services Employee-site</h2>
+                <h3>Hi, {employeeName(currentEmployeeId)} !</h3>
+                <h4>All current orders:</h4>
                 <ul>
                     {allOrders.map(order => {
                         return (
                             <div key={`order--${order.id}`}>
                             {order.completed ? "" :
                                 <li>
-                                    Product Name: {order.product.name}<br></br>
+                                    Product Name: <span>{order.product.name}</span><br></br>
                                     Quantity: {order.quantity}<br></br>
                                     Estimate delivery date: {order.deliveryDate}<br></br>
                                     <label className="completeLabel">Completed: </label>
@@ -220,7 +222,7 @@ export const OrderList = () => {
                     }
                 </ul>
 
-                <h3>All current service request(s):</h3>
+                <h4>All current service request(s):</h4>
                 <ul>
                     {allTickets.map(ticket => {
                         return (
@@ -228,7 +230,7 @@ export const OrderList = () => {
                             {ticket.completed ? "" :
                                 <li>
                                     Description: {ticket.description}<br></br>
-                                    Assigned to: {employeeName(ticket.employeeId)}<br></br>
+                                    Assigned to: <span>{employeeName(ticket.employeeId)}</span><br></br>
                                     
                                     <label className="completeLabel">Re-assign request to: </label>
                                     <select id="technician" onChange={
@@ -279,7 +281,7 @@ export const OrderList = () => {
                                 <div key={`order--${order.id}`}>
                                     {order.completed ? "" :
                                         <li>
-                                            Product Name: {order.product.name}<br></br>
+                                            Product Name: <span>{order.product.name}</span><br></br>
                                             Quantity: {order.quantity}<br></br>
                                             Estimate delivery date: {order.deliveryDate}<br></br>
                                             Price per unit: {numberFormat(order.product.price)}<br></br>
@@ -295,7 +297,7 @@ export const OrderList = () => {
                         })
                     }
                 </ul>
-                <span>Total Order(s): {numberFormat(totalRevenue)}</span>
+                <div className="totalRev">Total Order(s): {numberFormat(totalRevenue)}</div>
 
                 <h4>Your current service request(s):</h4>
                 <ul>

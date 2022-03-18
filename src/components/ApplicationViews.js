@@ -4,7 +4,7 @@ import { ProductList } from "./products/ProductList"
 import { OrderList } from "./products/OrderList"
 import { ServiceForm } from "./forms/ServiceForm"
 import { AddProductForm } from "./products/AddProductForm"
-import { DownloadOrders } from "./download/DownloadOrders"
+import { Download } from "./download/Download"
 
 
 export const ApplicationViews = () => {
@@ -23,7 +23,7 @@ export const ApplicationViews = () => {
                 <OrderList />
             </Route>
             <Route exact path="/orders/download">
-                <DownloadOrders />
+                <Download />
             </Route>
         </>
     )
