@@ -59,6 +59,11 @@ export default {
             .then(res => res.json())
         
     },
+    async getDownloadServiceTickets () {
+        return await fetch(`http://localhost:8088/serviceTickets?_expand=customer&_expand=employee`)
+            .then(res => res.json())
+        
+    },
     async getServiceTickets (id) {
         return await fetch(`http://localhost:8088/serviceTickets?customerId=${id}`)
             .then(res => res.json())

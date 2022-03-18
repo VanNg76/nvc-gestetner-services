@@ -15,7 +15,8 @@
 
 .navbar__item {
     flex-basis: 15%;
-    list-style-type: none;    
+    list-style-type: none;
+    text-align: center;
 }
 
 .navbar__link {

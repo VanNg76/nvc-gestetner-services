@@ -3,10 +3,17 @@
     margin-top: 5px;
     margin-bottom: 10px;
     background-color: lightgray;
+    padding: 5px;
 }
 
 .completeCheck, .completeLabel {
     margin: 0 52px 0 0;
+}
+
+.totalRev {
+    font-size: 1.1rem;
+    color: rgb(250, 20, 20);
+    text-decoration: underline rgb(200, 20, 20);
 }
 
 

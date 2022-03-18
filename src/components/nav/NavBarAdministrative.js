@@ -18,7 +18,7 @@ export const NavBarAdminstrative = (props) => {
                     <Link className="navbar__link" to="/orders">Orders and Service Requests</Link>
                 </li>
                 <li className="navbar__item active">
-                    <Link className="navbar__link" to="/orders/download">Download File</Link>
+                    <Link className="navbar__link" to="/orders/download">Download Files</Link>
                 </li>
                 
             </ul>
