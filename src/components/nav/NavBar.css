@@ -1,3 +1,12 @@
+.navbar__area {
+    height: 3.8rem;
+    background-color: gray;
+    padding-top: 0.6rem;
+    padding-bottom: 0.8rem;
+    font-size: 1rem;
+    margin-bottom: 1rem;
+}
+
 .navbar {
     display: flex;
     flex-wrap: nowrap;
@@ -5,6 +14,22 @@
 }
 
 .navbar__item {
-    flex-basis: 20%;
-    list-style-type: none;
+    flex-basis: 15%;
+    list-style-type: none;    
+}
+
+.navbar__link {
+    color: #fff;
+}
+
+.button--logout {
+    width: 4.5rem;
+    height: 2.2rem;
+    font-size: 1rem;
+    background-color: lightgrey;
+    position:absolute;
+    top: 1.5rem;
+    right: 1rem;
+    border-radius: 0.3rem;
+    font-family:Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
 }

@@ -1,5 +1,6 @@
 import React, { useState } from "react"
 import { useHistory } from "react-router-dom"
+import "./ServiceForm.css"
 
 export const ServiceForm = () => {
     const [service, update] = useState({ });
@@ -35,11 +36,9 @@ export const ServiceForm = () => {
             <h2 className="serviceForm__title">New Service Request</h2>
             <fieldset>
                 <div className="form-group">
-                    <label htmlFor="description">Description:</label>
-                    <input
-                        required autoFocus
-                        type="text"
-                        className="form-control"
+                    <label htmlFor="description">Description:</label><br></br>
+                    <textarea
+                        autoFocus
                         placeholder="Brief description of problem"
                         onChange={
                             (evt) => {
@@ -51,7 +50,7 @@ export const ServiceForm = () => {
                 </div>
             </fieldset>
             
-            <button className="btn btn-primary" onClick={saveService}>
+            <button className="button-submit" onClick={saveService}>
                 Submit request
             </button>
         </form>

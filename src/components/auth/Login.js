@@ -53,7 +53,7 @@ export const Login = () => {
                     <h1>NVC Gestetner Services</h1>
                     <h2>Please sign in</h2>
                     <fieldset>
-                        <label htmlFor="inputEmail"> Email address </label>
+                        <label className="loginLabel" htmlFor="inputEmail"> Email address </label>
                         <input type="email"
                             onChange={evt => set(evt.target.value)}
                             className="form-control"
@@ -61,7 +61,7 @@ export const Login = () => {
                             required autoFocus />
                     </fieldset>
                     <fieldset>
-                        <button type="submit">
+                        <button type="submit" className="button--signin">
                             Sign in
                         </button>
                     </fieldset>

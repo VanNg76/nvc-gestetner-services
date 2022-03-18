@@ -9,6 +9,10 @@ fieldset {
     border: 0;
 }
 
+.loginLabel {
+    margin-left: 0;
+}
+
 .form--login {
     display: inline-block;
     margin: 0 auto;
@@ -17,11 +21,6 @@ fieldset {
 
 .form--login > fieldset > input[type="email"] {
     width: 25em;
-}
-
-.label--login {
-    width: 8rem;
-    display: inline-block;
 }
 
 .form-control {
@@ -65,3 +64,6 @@ fieldset {
     min-height: 5rem;
 }
 
+.button--signin {
+    width: 6rem;
+}

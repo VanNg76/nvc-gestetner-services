@@ -7,6 +7,22 @@ export default {
     async getProducts () {
         return await fetch("http://localhost:8088/products?_sort=categoryId")
             .then(res => res.json())
+    },
+    async getBW () {
+        return await fetch("http://localhost:8088/products?categoryId=1")
+            .then(res => res.json())
+    },
+    async getColor () {
+        return await fetch("http://localhost:8088/products?categoryId=2")
+            .then(res => res.json())
+    },
+    async getWF () {
+        return await fetch("http://localhost:8088/products?categoryId=3")
+            .then(res => res.json())
+    },
+    async getConsumable () {
+        return await fetch("http://localhost:8088/products?categoryId=4")
+            .then(res => res.json())
         
     },
     async getProductsbyCat (catId) {

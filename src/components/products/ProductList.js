@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react"
 import { useHistory } from "react-router-dom";
 import ApiManager from "../ApiManager";
+import "./ProductList.css"
 
 
 export const ProductList = () => {
@@ -109,13 +110,16 @@ export const ProductList = () => {
             {
                 isAdministrative() ?
                     <div>
-                        <button onClick={() => history.push("/products/new")}>Add New Product</button>
+                        <button className="button-addNew" onClick={() => history.push("/products/new")}>
+                            ADD NEW PRODUCT</button>
+                        <br></br>
                     </div>
                 : ""
             }
+            <br></br>
 
-            <label htmlFor="category">Select category: </label>
-            <select id="category" onChange={
+            <label className="selectCat">SELECT CATEGORY: </label>
+            <select id="category" className="dropdown" onChange={
                 (event) => {
                     changeCatId(parseInt(event.target.value))
                 }
@@ -132,12 +136,12 @@ export const ProductList = () => {
                 filtered.map(product => {
                     return (
                         <div key={`product--${product.id}`}>
-                            <p>Product name: {product.name}</p>
+                            <p>Product name: <span>{product.name}</span></p>
                             <p>Description: {product.description}</p>
-                            <p>Price: ${numberFormat(product.price)}</p>
+                            <p>Price: <strong>{numberFormat(product.price)}</strong></p>
 
                             {currentEmployeeId ? "" :
-                                <button id={product.id} onClick={
+                                <button className="button-purchase" id={product.id} onClick={
                                     (event) => {
                                         const copy = {...product}
                                         copy.showedAdditionInfo = !copy.showedAdditionInfo
@@ -145,19 +149,19 @@ export const ProductList = () => {
                                     }
                                 }>Purchase</button>
                             }
-
+                            <br></br>
                             {
                                 product.showedAdditionInfo ?
                                     <div>
                                         <form className="purchaseForm">
-                                            <h2 className="purchaseForm__title">Additional Info:</h2>
-                                            <fieldset>
-                                                <div className="form-group">
-                                                    <label htmlFor="quantity">Quantity:</label>
+                                            <h3 className="purchaseForm__title">Require additional information</h3>
+                                                <div>
+                                                    <label className="form-addition-label">Quantity:</label>
                                                     <input
-                                                        required autoFocus
                                                         type="number"
-                                                        className="form-control"
+                                                        min={1}
+                                                        autoFocus
+                                                        className="form-addition-input"
                                                         placeholder="Enter quantity"
                                                         onChange={
                                                             (evt) => {
@@ -167,15 +171,12 @@ export const ProductList = () => {
                                                             }
                                                         } />
                                                 </div>
-                                            </fieldset>
 
-                                            <fieldset>
-                                                <div className="form-group">
-                                                    <label htmlFor="deliveryDate">Delivery date:</label>
+                                                <div>
+                                                    <label className="form-addition-label">Delivery date:</label>
                                                     <input
-                                                        required autoFocus
                                                         type="date"
-                                                        className="form-control"
+                                                        className="form-addition-input"
                                                         placeholder="Choose delivery date"
                                                         onChange={
                                                             (evt) => {
@@ -185,14 +186,14 @@ export const ProductList = () => {
                                                             }
                                                         } />
                                                 </div>
-                                            </fieldset>
-                                            
-                                            <button className="btn btn-primary" onClick={
+                                            <br></br>
+                                            <button className="button-placepurchase" onClick={
                                                 (event) => {
                                                     savePurchase(event, product)
                                                 }
                                                 }>Place Purchase
                                             </button>
+                                            <br></br>
                                         </form>
                                     </div>
                                 : ""

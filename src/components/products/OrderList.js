@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react"
 import ApiManager from "../ApiManager"
+import "./OrderList.css"
 
 
 export const OrderList = () => {
@@ -9,6 +10,7 @@ export const OrderList = () => {
     const [updateOrder, setUpdateOrder] = useState(false)
     const [updateTicket, setUpdateTicket] = useState(false)
     const [employees, addEmployees] = useState([])
+    const [customers, addCustomers] = useState([])
 
     // customers' array
     const [orders, addOrders] = useState([])
@@ -68,9 +70,9 @@ export const OrderList = () => {
     useEffect(
         () => {
             ApiManager.getEmployees()
-                .then(emp => {
-                    addEmployees(emp)
-                })
+                .then(emp => addEmployees(emp))
+            ApiManager.getCustomers()
+                .then(cus => addCustomers(cus))
         }, []
     )
     
@@ -170,6 +172,11 @@ export const OrderList = () => {
         return (findEmployee?.name)
     }
 
+    const customerName = (id) => {
+        const findCustomer = customers.find(cus => cus.id === id)
+        return (findCustomer?.name)
+    }
+
     const numberFormat = (value) => {
         return new Intl.NumberFormat('en-US', {
             style: 'currency',
@@ -192,8 +199,8 @@ export const OrderList = () => {
                                     Product Name: {order.product.name}<br></br>
                                     Quantity: {order.quantity}<br></br>
                                     Estimate delivery date: {order.deliveryDate}<br></br>
-                                    <label>Completed: </label>
-                                    <input type="checkbox" id={`orderComplete--${order.id}`} onChange={
+                                    <label className="completeLabel">Completed: </label>
+                                    <input type="checkbox" className="completeCheck" id={`orderComplete--${order.id}`} onChange={
                                         (event) => {
                                             const copy = { ...order }
                                             copy.completed = true
@@ -201,7 +208,7 @@ export const OrderList = () => {
                                             changeOrder(event, copy)
                                         }
                                     }></input>
-                                    <button onClick={() => {
+                                    <button className="button-cancel" onClick={() => {
                                         window.alert("This product is no more available")
                                         deleteEmployeeOrder(order.id)
                                     }}>Delete</button>
@@ -222,22 +229,8 @@ export const OrderList = () => {
                                 <li>
                                     Description: {ticket.description}<br></br>
                                     Assigned to: {employeeName(ticket.employeeId)}<br></br>
-
-                                    <label>Completed: </label>
-                                    <input type="checkbox" id={`ticketComplete--${ticket.id}`} onChange={
-                                        (evt) => {
-                                            const copy = {...ticket}
-                                            copy.completed = true
-                                            changeTicket(evt, copy)
-                                        }
-                                    }></input>
                                     
-                                    <button onClick={() => {
-                                        window.alert("This service is not available")
-                                        deleteEmployeeTicket(ticket.id)
-                                    }}>Delete</button><br></br>
-                                    
-                                    <label>Re-assign ticket to: </label>
+                                    <label className="completeLabel">Re-assign request to: </label>
                                     <select id="technician" onChange={
                                         (event) => {
                                             const copy = {...ticket}
@@ -252,6 +245,22 @@ export const OrderList = () => {
                                             })
                                         }
                                     </select>
+                                    <br></br>
+
+                                    <label className="completeLabel">Completed: </label>
+                                    <input type="checkbox" className="completeCheck" id={`ticketComplete--${ticket.id}`} onChange={
+                                        (evt) => {
+                                            const copy = {...ticket}
+                                            copy.completed = true
+                                            changeTicket(evt, copy)
+                                        }
+                                    }></input>
+                                    
+                                    <button className="button-cancel" onClick={() => {
+                                        window.alert("This service is not available")
+                                        deleteEmployeeTicket(ticket.id)
+                                    }}>Delete</button><br></br>
+                                    <br></br>
                                 </li>
                             }
                             </div>
@@ -261,7 +270,8 @@ export const OrderList = () => {
             </div>
         :
             <div>
-                <p>Your current order(s):</p>
+                <h3>Hi, {customerName(currentCustomerId)} !</h3>
+                <h4>Your current order(s):</h4>
                 <ul>
                     {
                         orders.map(order => {
@@ -273,9 +283,9 @@ export const OrderList = () => {
                                             Quantity: {order.quantity}<br></br>
                                             Estimate delivery date: {order.deliveryDate}<br></br>
                                             Price per unit: {numberFormat(order.product.price)}<br></br>
-                                            Total: {numberFormat(order.product.price * order.quantity)}<br></br>
+                                            Total: <strong>{numberFormat(order.product.price * order.quantity)}</strong><br></br>
                                             
-                                            <button onClick={() => {
+                                            <button className="button-cancel" onClick={() => {
                                                 deleteOrder(order.id)
                                             }}>Cancel</button>
                                         </li>
@@ -285,9 +295,9 @@ export const OrderList = () => {
                         })
                     }
                 </ul>
-                <p>Total Price of current Order(s): {numberFormat(totalRevenue)}</p>
+                <span>Total Order(s): {numberFormat(totalRevenue)}</span>
 
-                <p>Your current service request(s):</p>
+                <h4>Your current service request(s):</h4>
                 <ul>
                     {
                         tickets.map(ticket => {
@@ -297,7 +307,7 @@ export const OrderList = () => {
                                         <li>
                                             <div>Description: {ticket.description}</div>
                                             
-                                            <button onClick={() => {
+                                            <button className="button-cancel" onClick={() => {
                                                 deleteTicket(ticket.id)
                                             }}>Cancel</button>
                                         </li>

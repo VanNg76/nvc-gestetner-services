@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from "react"
 import { useHistory } from "react-router-dom"
 import ApiManager from "../ApiManager";
-// import { getCategories } from "../ApiManager";
+import "./AddProductForm.css"
+
 
 export const AddProductForm = () => {
     const [categories, addCategories] = useState()
@@ -44,14 +45,15 @@ export const AddProductForm = () => {
 
     return (
         <form className="addProductForm">
-            <h2 className="addProductForm__title">Add Product</h2>
+            <h2 className="addProductForm__title">Add New Product</h2>
             <fieldset>
                 <div className="form-group">
-                    <label htmlFor="name">Product name: </label>
+                    <label className="addLabel" htmlFor="name">Product name: </label>
+                    <br></br>
                     <input
-                        required autoFocus
+                        autoFocus
                         type="text"
-                        className="form-control"
+                        className="addInput"
                         placeholder="Enter product name"
                         onChange={
                             (evt) => {
@@ -65,11 +67,11 @@ export const AddProductForm = () => {
 
             <fieldset>
                 <div className="form-group">
-                    <label htmlFor="description">Product description: </label>
+                    <label className="addLabel" htmlFor="description">Product description: </label>
+                    <br></br>
                     <input
-                        required autoFocus
                         type="text"
-                        className="form-control"
+                        className="addInput"
                         placeholder="Enter product description"
                         onChange={
                             (evt) => {
@@ -83,11 +85,12 @@ export const AddProductForm = () => {
 
             <fieldset>
                 <div className="form-group">
-                    <label htmlFor="price">Product price: </label>
+                    <label className="addLabel" htmlFor="price">Product price: </label>
+                    <br></br>
                     <input
-                        required autoFocus
                         type="number"
-                        className="form-control"
+                        min={0}
+                        className="addInput"
                         placeholder="Enter product price"
                         onChange={
                             (evt) => {
@@ -101,15 +104,16 @@ export const AddProductForm = () => {
 
             <fieldset>
                 <div className="form-group">
-                    <label htmlFor="category">Select product category: </label>
-                    <select id="category" onChange={
+                    <label className="addLabel" htmlFor="category">Select product category: </label>
+                    <br></br>
+                    <select className="addSelect" id="category" onChange={
                         (evt) => {
                             const copy = {...product}
                             copy.categoryId = evt.target.value
                             addProduct(copy)
                         }
                     }>
-                        <option value="">Select category:</option>
+                        <option value="">Select category</option>
                         {
                             categories?.map(category => {
                                 return <option key={`categories--${category.id}`} value={category.id}>{category.type}</option>
@@ -119,7 +123,7 @@ export const AddProductForm = () => {
                 </div>
             </fieldset>
 
-            <button className="btn btn-primary" onClick={saveProduct}>
+            <button className="button-add" onClick={saveProduct}>
                 Add Product
             </button>
         </form>
