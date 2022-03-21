@@ -32,10 +32,10 @@ span {
 @keyframes appear {
     from {
         opacity: 0.2;
-        transform: rotate(-30deg) translateY(-100%) ;
+        transform: rotate(30deg) translateY(-100%) ;
     }
     to {
-        opacity: 1;
+        opacity: 0.8;
         transform: rotate(0deg) translateY(0%) ;
     }
 }
@@ -43,6 +43,7 @@ span {
 .purchaseForm {
     animation-name: appear;
     animation-duration: 0.8s;
+    border-radius: 0.3rem;
     width: 350px;
     margin-left: 50px;
     padding: 10px;
@@ -70,5 +71,6 @@ span {
     display: block;
     margin-left: auto;
     margin-right: auto;
+    font-weight: 800;
 }
 

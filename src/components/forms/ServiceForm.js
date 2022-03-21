@@ -23,10 +23,10 @@ export const ServiceForm = () => {
             },
             body: JSON.stringify(newService)
         }
-
+       
         return fetch("http://localhost:8088/serviceTickets", fetchOption)
             .then(() => {
-                window.alert("Your request has been submitted")
+                window.alert("Your request has been submitted !")
                 history.push("/orders")
             })
     }
@@ -46,11 +46,19 @@ export const ServiceForm = () => {
                                 copy.description = evt.target.value
                                 update(copy)
                             }
-                        } />
+                        }
+                    />
                 </div>
             </fieldset>
             
-            <button className="button-submit" onClick={saveService}>
+            <button className="button-submit" onClick={(evt) => {
+                // check if user has not input description or description is empty
+                if (Object.keys(service).length === 0 || service.description === "") {
+                    window.alert("Enter brief desciption of your issue...")
+                } else {
+                    saveService(evt)
+                }
+            }}>
                 Submit request
             </button>
         </form>

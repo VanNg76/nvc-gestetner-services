@@ -22,14 +22,13 @@ export const Download = () => {
 
   const orderHeaders = [
     { label: "Order ID", key: "id" },
-    { label: "Customer ID", key: "customerId" },
     { label: "Customer Name", key: "customer.name" },
     { label: "Employee Name", key: "employee.name" },
     { label: "Product Name", key: "product.name" },
     { label: "Unit Price", key: "product.price" },
     { label: "Quantity", key: "quantity" },
     { label: "Est. Delivery Date", key: "deliveryDate" },
-    { label: "Order Status", key: "completed" }
+    { label: "Order Completion", key: "completed" }
   ]
 
     const customerHeaders = [
@@ -43,7 +42,7 @@ export const Download = () => {
       { label: "Customer Name", key: "customer.name" },
       { label: "Employee Name", key: "employee.name" },
       { label: "Description", key: "description" },
-      { label: "Order Status", key: "completed" }
+      { label: "Request Completion", key: "completed" }
     ]
     
     return (
