@@ -20,8 +20,6 @@ export const ProductList = () => {
         () => {
             ApiManager.getCategories()
                 .then(cat => setCategories(cat))
-            ApiManager.getProductsbyCat(catId)
-                .then(filteredPro => setFilter(filteredPro))
         },
         []
     )
@@ -61,6 +59,16 @@ export const ProductList = () => {
             completed: false
         }
 
+        const copy = {...product}
+        copy.showedAdditionInfo = false
+        const fetchUpdateOption = {
+            method: "PUT",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify(copy)
+        }
+
         const fetchOption = {
             method: "POST",
             headers: {
@@ -69,9 +77,12 @@ export const ProductList = () => {
             body: JSON.stringify(newPurchase)
         }
 
-        return await fetch("http://localhost:8088/orders", fetchOption)
+        return await fetch(`http://localhost:8088/products/${copy.id}`, fetchUpdateOption)
             .then(() => {
-                history.push("/orders")
+                return fetch("http://localhost:8088/orders", fetchOption)
+                    .then(() => {
+                        history.push("/orders")
+                    })
             })
     }
 
@@ -114,7 +125,7 @@ export const ProductList = () => {
                             ADD NEW PRODUCT</button>
                         <br></br>
                     </div>
-                : ""
+                :   ""
             }
             <br></br>
 
@@ -188,11 +199,8 @@ export const ProductList = () => {
                                                 </div>
                                             <br></br>
                                             <button className="button-placepurchase" onClick={
-                                                (event) => {
-                                                    savePurchase(event, product)
-                                                }
-                                                }>Place Purchase
-                                            </button>
+                                                (event) => {savePurchase(event, product)}
+                                            }>Place Purchase</button>
                                             <br></br>
                                         </form>
                                     </div>
