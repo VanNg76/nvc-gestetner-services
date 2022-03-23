@@ -191,135 +191,147 @@ export const OrderList = () => {
             <div>
                 <h2>NVC Gestetner Services Employee-site</h2>
                 <h3>Hi, {employeeName(currentEmployeeId)} !</h3>
-                <h4>All current orders:</h4>
-                <ul>
-                    {allOrders.map(order => {
-                        return (
-                            <div key={`order--${order.id}`}>
-                            {order.completed ? "" :
-                                <li>
-                                    Product Name: <span>{order.product.name}</span><br></br>
-                                    Quantity: {order.quantity}<br></br>
-                                    Estimate delivery date: {order.deliveryDate}<br></br>
-                                    <label className="completeLabel">Completed: </label>
-                                    <input type="checkbox" className="completeCheck" id={`orderComplete--${order.id}`} onChange={
-                                        (event) => {
-                                            const copy = { ...order }
-                                            copy.completed = true
-                                            delete copy.product
-                                            changeOrder(event, copy)
-                                        }
-                                    }></input>
-                                    <button className="button-cancel" onClick={() => {
-                                        window.alert("This product is no more available")
-                                        deleteEmployeeOrder(order.id)
-                                    }}>Delete</button>
-                                </li>
-                            }
-                            </div>
-                        )
-                    })
-                    }
-                </ul>
-
-                <h4>All current service request(s):</h4>
-                <ul>
-                    {allTickets.map(ticket => {
-                        return (
-                            <div key={`ticket--${ticket.id}`}>
-                            {ticket.completed ? "" :
-                                <li>
-                                    Description: {ticket.description}<br></br>
-                                    Assigned to: <span>{employeeName(ticket.employeeId)}</span><br></br>
-                                    
-                                    <label className="completeLabel">Re-assign request to: </label>
-                                    <select id="technician" onChange={
-                                        (event) => {
-                                            const copy = {...ticket}
-                                            copy.employeeId = parseInt(event.target.value)
-                                            changeTicket(event, copy)
-                                        }
-                                    }>
-                                        <option value="">Select technician:</option>
-                                        {
-                                            employees.map(employee => {
-                                                return <option key={`employees--${employee.id}`} value={employee.id}>{employee.name}</option>
-                                            })
-                                        }
-                                    </select>
-                                    <br></br>
-
-                                    <label className="completeLabel">Completed: </label>
-                                    <input type="checkbox" className="completeCheck" id={`ticketComplete--${ticket.id}`} onChange={
-                                        (evt) => {
-                                            const copy = {...ticket}
-                                            copy.completed = true
-                                            changeTicket(evt, copy)
-                                        }
-                                    }></input>
-                                    
-                                    <button className="button-cancel" onClick={() => {
-                                        window.alert("This service is not available")
-                                        deleteEmployeeTicket(ticket.id)
-                                    }}>Delete</button><br></br>
-                                    <br></br>
-                                </li>
-                            }
-                            </div>
-                        )
-                    })}
-                </ul>
-            </div>
-        :
-            <div>
-                <h3>Hi, {customerName(currentCustomerId)} !</h3>
-                <h4>Your current order(s):</h4>
-                <ul>
-                    {
-                        orders.map(order => {
-                            return (
-                                <div key={`order--${order.id}`}>
+                <div className="part">
+                    <div className="view">
+                        <h4>All current orders:</h4>
+                        <ul>
+                            {allOrders.map(order => {
+                                return (
+                                    <div key={`order--${order.id}`}>
                                     {order.completed ? "" :
                                         <li>
                                             Product Name: <span>{order.product.name}</span><br></br>
                                             Quantity: {order.quantity}<br></br>
                                             Estimate delivery date: {order.deliveryDate}<br></br>
-                                            Price per unit: {numberFormat(order.product.price)}<br></br>
-                                            Total: <strong>{numberFormat(order.product.price * order.quantity)}</strong><br></br>
-                                            
+                                            <label className="completeLabel">Completed: </label>
+                                            <input type="checkbox" className="completeCheck" id={`orderComplete--${order.id}`} onChange={
+                                                (event) => {
+                                                    const copy = { ...order }
+                                                    copy.completed = true
+                                                    delete copy.product
+                                                    changeOrder(event, copy)
+                                                }
+                                            }></input>
                                             <button className="button-cancel" onClick={() => {
-                                                deleteOrder(order.id)
-                                            }}>Cancel</button>
+                                                window.alert("This product is no more available")
+                                                deleteEmployeeOrder(order.id)
+                                            }}>Delete</button>
                                         </li>
                                     }
-                                </div>
-                            )
-                        })
-                    }
-                </ul>
-                <div className="totalRev">Total Order(s): {numberFormat(totalRevenue)}</div>
+                                    </div>
+                                )
+                            })
+                            }
+                        </ul>
+                    </div>
 
-                <h4>Your current service request(s):</h4>
-                <ul>
-                    {
-                        tickets.map(ticket => {
-                            return (
-                                <div key={`ticket--${ticket.id}`}>
+                    <div className="view">
+                        <h4>All current service request(s):</h4>
+                        <ul>
+                            {allTickets.map(ticket => {
+                                return (
+                                    <div key={`ticket--${ticket.id}`}>
                                     {ticket.completed ? "" :
                                         <li>
-                                            <div>Description: {ticket.description}</div>
+                                            Description: {ticket.description}<br></br>
+                                            Assigned to: <span>{employeeName(ticket.employeeId)}</span><br></br>
+                                            
+                                            <label className="completeLabel">Re-assign request to: </label>
+                                            <select id="technician" onChange={
+                                                (event) => {
+                                                    const copy = {...ticket}
+                                                    copy.employeeId = parseInt(event.target.value)
+                                                    changeTicket(event, copy)
+                                                }
+                                            }>
+                                                <option value="">Select technician:</option>
+                                                {
+                                                    employees.map(employee => {
+                                                        return <option key={`employees--${employee.id}`} value={employee.id}>{employee.name}</option>
+                                                    })
+                                                }
+                                            </select>
+                                            <br></br>
+
+                                            <label className="completeLabel">Completed: </label>
+                                            <input type="checkbox" className="completeCheck" id={`ticketComplete--${ticket.id}`} onChange={
+                                                (evt) => {
+                                                    const copy = {...ticket}
+                                                    copy.completed = true
+                                                    changeTicket(evt, copy)
+                                                }
+                                            }></input>
                                             
                                             <button className="button-cancel" onClick={() => {
-                                                deleteTicket(ticket.id)
-                                            }}>Cancel</button>
+                                                window.alert("This service is not available")
+                                                deleteEmployeeTicket(ticket.id)
+                                            }}>Delete</button><br></br>
+                                            <br></br>
                                         </li>
                                     }
-                                </div>
-                            )
-                        })
-                    }
-                </ul>
+                                    </div>
+                                )
+                            })}
+                        </ul>
+                    </div>
+                </div>
             </div>
+        :
+        <>
+            <h3>Hi, {customerName(currentCustomerId)} !</h3>
+            <div className="part">
+                <div className="view">
+                    <h4>Your current order(s):</h4>
+                    <ul>
+                        {
+                            orders.map(order => {
+                                return (
+                                    <div key={`order--${order.id}`}>
+                                        {order.completed ? "" :
+                                            <li>
+                                                Product Name: <span>{order.product.name}</span><br></br>
+                                                Quantity: {order.quantity}<br></br>
+                                                Estimate delivery date: {order.deliveryDate}<br></br>
+                                                Price per unit: {numberFormat(order.product.price)}<br></br>
+                                                Total: <strong>{numberFormat(order.product.price * order.quantity)}</strong><br></br>
+                                                
+                                                <button className="button-cancel" onClick={() => {
+                                                    deleteOrder(order.id)
+                                                }}>Cancel</button>
+                                            </li>
+                                        }
+                                    </div>
+                                )
+                            })
+                        }
+                    </ul>
+                    <div className="totalRev">Total Order(s): {numberFormat(totalRevenue)}</div>
+                </div>
+
+                <div className="view">
+                    <h4>Your current service request(s):</h4>
+                    <ul>
+                        {
+                            tickets.map(ticket => {
+                                return (
+                                    <div key={`ticket--${ticket.id}`}>
+                                        {ticket.completed ? "" :
+                                            <li>
+                                                <div>Description: {ticket.description}</div>
+                                                
+                                                <button className="button-cancel" onClick={() => {
+                                                    deleteTicket(ticket.id)
+                                                }}>Cancel</button>
+                                            </li>
+                                        }
+                                    </div>
+                                )
+                            })
+                        }
+                    </ul>
+                </div>
+            </div>
+        </>
         }
     </>
     )

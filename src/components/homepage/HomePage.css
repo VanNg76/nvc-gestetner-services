@@ -47,7 +47,7 @@ h5 {
 
 img {
     width: 220px;
-    /* to make image center, use auto for margin left and right */
+    /* to make image center, use display:block margin left and right:auto */
     display: block;
     margin-left: auto;
     margin-right: auto;
@@ -67,5 +67,3 @@ img {
     animation-duration: 0.5s;
     animation-iteration-count: infinite;
 }
-
-

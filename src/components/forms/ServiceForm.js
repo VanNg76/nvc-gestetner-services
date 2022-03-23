@@ -54,7 +54,7 @@ export const ServiceForm = () => {
             <button className="button-submit" onClick={(evt) => {
                 // check if user has not input description or description is empty
                 if (Object.keys(service).length === 0 || service.description === "") {
-                    window.alert("Enter brief desciption of your issue...")
+                    window.alert("Enter brief description of your issue ...")
                 } else {
                     saveService(evt)
                 }
