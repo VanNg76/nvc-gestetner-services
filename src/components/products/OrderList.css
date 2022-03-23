@@ -16,4 +16,15 @@
     text-decoration: underline rgb(200, 20, 20);
 }
 
+.part {
+    display: flex;
+}
 
+.view {
+    flex: 45%;
+    padding: 10px;
+    justify-content: space-evenly;
+    margin: 20px;
+    box-shadow: 0 5px 10px 0 rgba(0, 0, 0, 0.522);
+    border-radius: 0.5rem;
+}

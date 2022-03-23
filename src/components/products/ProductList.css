@@ -18,11 +18,23 @@ span {
     margin-left: 0;
 }
 
+.product {
+    padding: 5px;
+    box-shadow: -4px -2px 0 rgba(0, 0, 0, 0.4);
+    border-radius: 0.3rem;
+    border-bottom: solid lightgrey;
+    border-right: solid lightgrey;
+    border-width: 1px;
+    margin: 20px;
+    width: 50%;
+}
+
 .button-purchase {
     background-color: lightgrey;
     border-radius: 0.3rem;
     padding: 0.3rem;
-    margin: 1rem;
+    margin: 0 0 1.5rem 1rem;
+    font-weight: 700;
 }
 
 .purchaseForm__title {
@@ -32,7 +44,7 @@ span {
 @keyframes appear {
     from {
         opacity: 0.2;
-        transform: rotate(30deg) translateY(-100%) ;
+        transform: rotate(20deg) translateY(-100%) ;
     }
     to {
         opacity: 0.8;

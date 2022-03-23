@@ -146,7 +146,7 @@ export const ProductList = () => {
             {
                 filtered.map(product => {
                     return (
-                        <div key={`product--${product.id}`}>
+                        <div className="product" key={`product--${product.id}`}>
                             <p>Product name: <span>{product.name}</span></p>
                             <p>Description: {product.description}</p>
                             <p>Price: <strong>{numberFormat(product.price)}</strong></p>
@@ -171,6 +171,7 @@ export const ProductList = () => {
                                                     <input
                                                         type="number"
                                                         min={1}
+                                                        required
                                                         autoFocus
                                                         className="form-addition-input"
                                                         placeholder="Enter quantity"
@@ -186,9 +187,10 @@ export const ProductList = () => {
                                                 <div>
                                                     <label className="form-addition-label">Delivery date:</label>
                                                     <input
-                                                        type="date"
+                                                        type="datetime-local"
                                                         className="form-addition-input"
                                                         placeholder="Choose delivery date"
+                                                        required
                                                         onChange={
                                                             (evt) => {
                                                                 const copy = {...purchase}
