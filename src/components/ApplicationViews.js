@@ -6,7 +6,6 @@ import { ServiceForm } from "./forms/ServiceForm"
 import { AddProductForm } from "./products/AddProductForm"
 import { Download } from "./download/Download"
 
-
 export const ApplicationViews = () => {
     return (
         <>

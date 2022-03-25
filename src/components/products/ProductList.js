@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react"
 import { useHistory } from "react-router-dom";
 import ApiManager from "../ApiManager";
 import "./ProductList.css"
+import { EditProductForm } from "./EditProductForm";
 
 
 export const ProductList = () => {
@@ -103,6 +104,32 @@ export const ProductList = () => {
             })
     }
 
+    // delete productId (admin view)
+    async function deleteProduct (id) {
+        await fetch(`http://localhost:8088/products/${id}`, {
+            method: "DELETE"
+        })
+
+        // update orders array to eliminate the deleted one!
+        const copy = filtered.filter(p => p.id !== id)
+        setFilter(copy)
+    }
+
+    async function editProduct (event, copy) {
+        event.preventDefault()
+        const fetchOption = {
+            method: "PUT",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify(copy)
+        }
+
+        return await fetch(`http://localhost:8088/products/${copy.id}`, fetchOption)
+            .then(() => setFilter(copy))
+    }
+
+
     const numberFormat = (value) => {
         return new Intl.NumberFormat('en-US', {
             style: 'currency',
@@ -151,7 +178,7 @@ export const ProductList = () => {
                             <p>Description: {product.description}</p>
                             <p>Price: <strong>{numberFormat(product.price)}</strong></p>
 
-                            {currentEmployeeId ? "" :
+                            {currentEmployeeId ? null :
                                 <button className="button-purchase" id={product.id} onClick={
                                     (event) => {
                                         const copy = {...product}
@@ -159,6 +186,21 @@ export const ProductList = () => {
                                         updateShowedAdditionInfo(event, copy)
                                     }
                                 }>Purchase</button>
+                            }
+                            {
+                                isAdministrative() ?
+                                    <div>
+                                        <button className="button-edit-product" onClick={
+                                            () => <EditProductForm productId={product.id}/>
+                                        }>CHANGE PRICE</button>
+                                        <button className="button-delete-product" onClick={() => 
+                                            {
+                                                deleteProduct(product.id)
+                                                history.push("/products")}
+                                            }
+                                        >DELETE</button>
+                                    </div>
+                                :   null
                             }
                             <br></br>
                             {

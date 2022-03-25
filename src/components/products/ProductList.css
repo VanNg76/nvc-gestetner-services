@@ -4,9 +4,10 @@ span {
     text-decoration: underline;
 }
 
-.button-addNew {
+.button-addNew, .button-delete-product, .button-edit-product {
     background-color: lightgrey;
     padding: 5px;
+    margin-right: 10px;
 }
 
 .dropdown {
