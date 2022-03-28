@@ -5,9 +5,10 @@ import { OrderList } from "./products/OrderList"
 import { ServiceForm } from "./forms/ServiceForm"
 import { AddProductForm } from "./products/AddProductForm"
 import { Download } from "./download/Download"
-
+import { EditProductForm } from "./products/EditProductForm"
 
 export const ApplicationViews = () => {
+
     return (
         <>
             <Route exact path="/products">
@@ -15,6 +16,9 @@ export const ApplicationViews = () => {
             </Route>
             <Route exact path="/products/new">
                 <AddProductForm />
+            </Route>
+            <Route path="/products/:productId(\d+)">
+                <EditProductForm />
             </Route>
             <Route path="/services/new">
                 <ServiceForm />
