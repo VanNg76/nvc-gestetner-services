@@ -2,7 +2,6 @@ import React, { useEffect, useState } from "react"
 import { useHistory } from "react-router-dom";
 import ApiManager from "../ApiManager";
 import "./ProductList.css"
-import { EditProductForm } from "./EditProductForm";
 
 
 export const ProductList = () => {
@@ -191,7 +190,9 @@ export const ProductList = () => {
                                 isAdministrative() ?
                                     <div>
                                         <button className="button-edit-product" onClick={
-                                            () => <EditProductForm productId={product.id}/>
+                                            () => {
+                                                history.push(`/products/${product.id}`)
+                                            }
                                         }>CHANGE PRICE</button>
                                         <button className="button-delete-product" onClick={() => 
                                             {

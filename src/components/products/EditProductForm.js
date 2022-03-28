@@ -1,37 +1,40 @@
 import React, { useState, useEffect } from "react"
-import { useHistory } from "react-router-dom"
+import { useHistory, useParams } from "react-router-dom"
 import ApiManager from "../ApiManager";
 import "./EditProductForm.css"
 
 
-export const EditProductForm = ({productId}) => {
+export const EditProductForm = () => {
     const [products, addProducts] = useState([])
     const [product, addProduct] = useState({ })
     const history = useHistory()
+    const { productId } = useParams()
 
     useEffect(
         () => {
             ApiManager.getProducts()
                 .then(p => addProducts(p))
-                .then(() => {
-                    const currentProduct = products.find(p => p.id === parseInt(productId))
-                    addProduct(currentProduct)
-                })
         },
-        [product]
+        []
+    )
+            
+    useEffect(() => {
+        const currentProduct = products.find(p => p.id === parseInt(productId))
+        addProduct(currentProduct)
+    }, [products]
     )
 
-    async function saveEditProduct (event, copy) {
+    async function saveEditProduct (event) {
         event.preventDefault()
         const fetchOption = {
             method: "PUT",
             headers: {
                 "Content-Type": "application/json"
             },
-            body: JSON.stringify(copy)
+            body: JSON.stringify(product)
         }
 
-        return await fetch(`http://localhost:8088/products/${copy.id}`, fetchOption)
+        return await fetch(`http://localhost:8088/products/${productId}`, fetchOption)
             .then(() => {
                 history.push("/products")
             })
@@ -42,24 +45,22 @@ export const EditProductForm = ({productId}) => {
             <h2 className="editProductForm__title">Edit Product Price</h2>
             <fieldset>
                 <div className="form-group">
-                    <label className="editLabel" htmlFor="price">Product price: </label>
-                    <br></br>
                     <input
                         type="number"
                         min={0}
                         className="editInput"
-                        placeholder={product.price}
+                        placeholder="Enter new price..."
                         onChange={
                             (evt) => {
                                 const copy = {...product}
-                                copy.price = evt.target.value
+                                copy.price = parseInt(evt.target.value)
                                 addProduct(copy)
                             }
                         } />
                 </div>
             </fieldset>
 
-            <button className="button-edit" onClick={() => saveEditProduct }>
+            <button className="button-edit" onClick={(event) => saveEditProduct (event) }>
                 Done
             </button>
         </form>
