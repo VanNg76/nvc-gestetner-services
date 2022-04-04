@@ -1,70 +1,43 @@
-# Getting Started with Create React App
+# NVC Gestetner Services
+This website is to display products. Allow customers to purchase new products, or book a related services. The website also allows employees or administrator log in to perform their jobs.
+- Homepage is common view for everyone.
+- Customers can log in (cust. view) to place orders online,  request services for their current products.
+- Employees can log in (emp. view) to process all orders and service requests.
+- Administrator can log in (admin view) to edit, delete, or add product, download database files.
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+## API resource
+git@github.com:VanNg76/nvc-gestetner-api.git
 
-## Available Scripts
 
-In the project directory, you can run:
+### How to run
+From the Homepage, log in as 1 of 3 differrent views:
+- Customer: jimmy@nvc.com (you can register new customer account if you want to have one)
+- Employee: james@nvc.com (or use others' in the API employees table)
+- Administrator: van@nvc.com (only one account)
 
-### `npm start`
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+### Techonologies used
+![image](https://user-images.githubusercontent.com/96600790/161573536-e7cebf42-3b6b-475b-b353-7900522dbd3a.png)
+![image](https://user-images.githubusercontent.com/96600790/161573615-bb407e86-7ab7-4ba6-bd21-212cfdc541d8.png)
+![image](https://user-images.githubusercontent.com/96600790/161573637-7ba60e06-7503-4400-940d-bb310a86f3aa.png)
+![image](https://user-images.githubusercontent.com/96600790/161573659-4c4a0ff7-93c7-4523-9b25-94a43c3dc3ec.png)
+![image](https://user-images.githubusercontent.com/96600790/161573676-f5bb6a64-efbf-4d07-b06d-6349cd0f27ed.png)
+![image](https://user-images.githubusercontent.com/96600790/161573692-89e33042-06c0-4abb-abbc-e41c1606301b.png)
+![image](https://user-images.githubusercontent.com/96600790/161573710-64c63013-3a1a-47db-9f20-b019fa129d54.png)
+![image](https://user-images.githubusercontent.com/96600790/161573724-64b0bd82-0149-45a8-9908-4c9f73beecf2.png)
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
 
-### `npm test`
+### Instruction for installing NVC
+Navigate to the workspace directory, run following commands from your git:
+- git clone git@github.com:VanNg76/nvc-gestetner-services.git
+- git clone git@github.com:VanNg76/nvc-gestetner-api.git
+- cd nvc-gestetner-api
+- json-server database.json -p 8088 -w
+- cd ..
+- cd nvc-gestetner
+- npm start
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+### ERD
+![image](https://user-images.githubusercontent.com/96600790/161571655-6b4849b7-578b-48e2-ba35-bc55149e98f4.png)
 
-### `npm run build`
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
-
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
-
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
-### `npm run eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
-
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
-
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
