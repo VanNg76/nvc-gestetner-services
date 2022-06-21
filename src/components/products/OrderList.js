@@ -104,7 +104,7 @@ export const OrderList = () => {
             body: JSON.stringify(copy)
         }
 
-        return await fetch(`http://localhost:8088/orders/${copy.id}`, fetchOption)
+        return await fetch(`https://coral-app-cuq3h.ondigitalocean.app//orders/${copy.id}`, fetchOption)
             .then(() => {
                 setUpdateOrder(!updateOrder)
             })
@@ -121,14 +121,14 @@ export const OrderList = () => {
             body: JSON.stringify(copy)
         }
 
-        return await fetch(`http://localhost:8088/serviceTickets/${copy.id}`, fetchOption)
+        return await fetch(`https://coral-app-cuq3h.ondigitalocean.app//serviceTickets/${copy.id}`, fetchOption)
             .then(() => {
                 setUpdateTicket(!updateTicket)
             })
     }
 
     async function deleteOrder (id) {
-        await fetch(`http://localhost:8088/orders/${id}`, {
+        await fetch(`https://coral-app-cuq3h.ondigitalocean.app//orders/${id}`, {
             method: "DELETE"
         })
 
@@ -138,7 +138,7 @@ export const OrderList = () => {
     }
 
     async function deleteEmployeeOrder (id) {
-        await fetch(`http://localhost:8088/orders/${id}`, {
+        await fetch(`https://coral-app-cuq3h.ondigitalocean.app//orders/${id}`, {
             method: "DELETE"
         })
 
@@ -148,7 +148,7 @@ export const OrderList = () => {
     }
 
     async function deleteTicket (id) {
-        await fetch(`http://localhost:8088/serviceTickets/${id}`, {
+        await fetch(`https://coral-app-cuq3h.ondigitalocean.app//serviceTickets/${id}`, {
             method: "DELETE"
         })
 
@@ -158,7 +158,7 @@ export const OrderList = () => {
     }
 
     async function deleteEmployeeTicket (id) {
-        await fetch(`http://localhost:8088/serviceTickets/${id}`, {
+        await fetch(`https://coral-app-cuq3h.ondigitalocean.app//serviceTickets/${id}`, {
             method: "DELETE"
         })
 

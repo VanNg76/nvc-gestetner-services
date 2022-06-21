@@ -24,7 +24,7 @@ export const ServiceForm = () => {
             body: JSON.stringify(newService)
         }
        
-        return fetch("http://localhost:8088/serviceTickets", fetchOption)
+        return fetch("https://coral-app-cuq3h.ondigitalocean.app//serviceTickets", fetchOption)
             .then(() => {
                 window.alert("Your request has been submitted !")
                 history.push("/orders")
