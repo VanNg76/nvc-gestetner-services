@@ -37,7 +37,7 @@ export const AddProductForm = () => {
             body: JSON.stringify(newProduct)
         }
 
-        return await fetch("https://coral-app-cuq3h.ondigitalocean.app//products", fetchOption)
+        return await fetch("https://coral-app-cuq3h.ondigitalocean.app/products", fetchOption)
             .then(() => {
                 history.push("/products")
             })

@@ -9,13 +9,13 @@ export const Login = () => {
     const history = useHistory()
 
     const existingUserCheck = () => {
-        return fetch(`https://coral-app-cuq3h.ondigitalocean.app//customers?email=${email}`)
+        return fetch(`https://coral-app-cuq3h.ondigitalocean.app/customers?email=${email}`)
             .then(res => res.json())
             .then(user => user.length ? user[0] : false)
     }
 
     const existingEmployeeCheck = () => {
-        return fetch(`https://coral-app-cuq3h.ondigitalocean.app//employees?email=${email}`)
+        return fetch(`https://coral-app-cuq3h.ondigitalocean.app/employees?email=${email}`)
             .then(res => res.json())
             .then(emp => emp.length ? emp[0] : false)
     }

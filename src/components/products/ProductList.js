@@ -77,9 +77,9 @@ export const ProductList = () => {
             body: JSON.stringify(newPurchase)
         }
 
-        return await fetch(`https://coral-app-cuq3h.ondigitalocean.app//products/${copy.id}`, fetchUpdateOption)
+        return await fetch(`https://coral-app-cuq3h.ondigitalocean.app/products/${copy.id}`, fetchUpdateOption)
             .then(() => {
-                return fetch("https://coral-app-cuq3h.ondigitalocean.app//orders", fetchOption)
+                return fetch("https://coral-app-cuq3h.ondigitalocean.app/orders", fetchOption)
                     .then(() => {
                         history.push("/orders")
                     })
@@ -97,7 +97,7 @@ export const ProductList = () => {
             body: JSON.stringify(copy)
         }
 
-        return await fetch(`https://coral-app-cuq3h.ondigitalocean.app//products/${copy.id}`, fetchOption)
+        return await fetch(`https://coral-app-cuq3h.ondigitalocean.app/products/${copy.id}`, fetchOption)
             .then(() => {
                 setUpdateProduct(!updateProduct)
             })
@@ -105,7 +105,7 @@ export const ProductList = () => {
 
     // delete productId (admin view)
     async function deleteProduct (id) {
-        await fetch(`https://coral-app-cuq3h.ondigitalocean.app//products/${id}`, {
+        await fetch(`https://coral-app-cuq3h.ondigitalocean.app/products/${id}`, {
             method: "DELETE"
         })
 

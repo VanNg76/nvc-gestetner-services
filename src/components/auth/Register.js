@@ -9,7 +9,7 @@ export const Register = (props) => {
     const history = useHistory()
 
     const existingUserCheck = () => {
-        return fetch(`https://coral-app-cuq3h.ondigitalocean.app//customers?email=${customer.email}`)
+        return fetch(`https://coral-app-cuq3h.ondigitalocean.app/customers?email=${customer.email}`)
             .then(res => res.json())
             .then(user => !!user.length)
     }
@@ -18,7 +18,7 @@ export const Register = (props) => {
         existingUserCheck()
             .then((userExists) => {
                 if (!userExists) {
-                    fetch("https://coral-app-cuq3h.ondigitalocean.app//customers", {
+                    fetch("https://coral-app-cuq3h.ondigitalocean.app/customers", {
                         method: "POST",
                         headers: {
                             "Content-Type": "application/json"
