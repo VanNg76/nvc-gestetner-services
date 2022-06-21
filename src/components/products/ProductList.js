@@ -114,21 +114,6 @@ export const ProductList = () => {
         setFilter(copy)
     }
 
-    async function editProduct (event, copy) {
-        event.preventDefault()
-        const fetchOption = {
-            method: "PUT",
-            headers: {
-                "Content-Type": "application/json"
-            },
-            body: JSON.stringify(copy)
-        }
-
-        return await fetch(`http://localhost:8088/products/${copy.id}`, fetchOption)
-            .then(() => setFilter(copy))
-    }
-
-
     const numberFormat = (value) => {
         return new Intl.NumberFormat('en-US', {
             style: 'currency',
